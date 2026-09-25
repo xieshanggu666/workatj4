@@ -15,6 +15,7 @@ import { useHandoverStore } from '@/stores/handover'
 import { useRetirementStore } from '@/stores/retirement'
 import { useReleaseStore } from '@/stores/release'
 import { useOrchestrationStore } from '@/stores/orchestration'
+import { useGovernanceStore } from '@/stores/governance'
 
 const route = useRoute()
 const auth = useAuthStore()
@@ -29,13 +30,17 @@ const handoverStore = useHandoverStore()
 const retirementStore = useRetirementStore()
 const releaseStore = useReleaseStore()
 const orchestrationStore = useOrchestrationStore()
+const governanceStore = useGovernanceStore()
 
 const isSharePage = () => route.name === 'share'
 
 onMounted(async () => {
-  await Promise.all([auth.loadUsers(), kb.loadAll(), reviewStore.loadAll(), gapStore.loadAll(), correctionStore.loadAll(), accessStore.loadAll(), freshnessStore.loadAll(), handoverStore.loadAll(), retirementStore.loadAll(), releaseStore.loadAll(), orchestrationStore.loadAll()])
+  await Promise.all([auth.loadUsers(), kb.loadAll(), reviewStore.loadAll(), gapStore.loadAll(), correctionStore.loadAll(), accessStore.loadAll(), freshnessStore.loadAll(), handoverStore.loadAll(), retirementStore.loadAll(), releaseStore.loadAll(), orchestrationStore.loadAll(), governanceStore.loadAll()])
   // 接管崩溃/刷新前未跑完的分批编排作业（心跳超时，逐篇幂等断点续跑）
   await orchestrationStore.resumeStale()
+  // 汇聚六类治理流程的在途待办事件（去重建单/闭环/重开），并做一次超时升级扫描
+  await governanceStore.syncEvents()
+  await governanceStore.sweepTimeouts()
   // 默认以管理员登录，便于完整演示；可通过「账号与权限」切换角色
   if (!auth.user) await auth.login('admin')
   await engagement.load(auth.user?.id)

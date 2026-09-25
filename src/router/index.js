@@ -4,6 +4,7 @@ import { canEditContent } from '@/utils/permission'
 
 const routes = [
   { path: '/', name: 'dashboard', component: () => import('@/views/Dashboard.vue'), meta: { title: '首页' } },
+  { path: '/todos', name: 'todoCenter', component: () => import('@/views/TodoCenter.vue'), meta: { title: '统一待办' } },
   { path: '/docs', name: 'docList', component: () => import('@/views/DocList.vue'), meta: { title: '文档库' } },
   { path: '/docs/new', name: 'docNew', component: () => import('@/views/DocEditor.vue'), meta: { title: '新建文档', requiresEdit: true } },
   { path: '/docs/:id', name: 'docDetail', component: () => import('@/views/DocDetail.vue'), meta: { title: '文档详情' } },

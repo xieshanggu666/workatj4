@@ -12,6 +12,7 @@ import { useFreshnessStore } from '@/stores/freshness'
 import { useHandoverStore } from '@/stores/handover'
 import { useRetirementStore } from '@/stores/retirement'
 import { useReleaseStore } from '@/stores/release'
+import { useGovernanceStore } from '@/stores/governance'
 import { canEditContent, canViewDoc, roleLabel } from '@/utils/permission'
 import { avatarColor } from '@/utils/format'
 
@@ -28,6 +29,10 @@ const freshnessStore = useFreshnessStore()
 const handoverStore = useHandoverStore()
 const retirementStore = useRetirementStore()
 const releaseStore = useReleaseStore()
+const govStore = useGovernanceStore()
+
+// 统一待办：当前用户可见的待处理事件数（侧边栏角标）
+const todoPending = computed(() => govStore.pendingCountFor(auth.user))
 
 // 侧栏各文档列表统一过权限：授权撤销/到期后标题也不再从最近浏览/收藏/协作入口泄露
 function visible(d) {
@@ -88,6 +93,9 @@ function goDoc(id) {
   <aside class="sidebar">
     <nav class="links">
       <div class="link" :class="{ on: route.name === 'dashboard' }" @click="go('/', {})">🏠 首页总览</div>
+      <div class="link" :class="{ on: route.name === 'todoCenter' }" @click="go('/todos', {})">
+        ✅ 统一待办<span v-if="todoPending" class="link-badge todo-badge">{{ todoPending }}</span>
+      </div>
       <div class="link" :class="{ on: route.name === 'qa' }" @click="go('/qa', {})">🤖 智能问答</div>
       <div class="link" :class="{ on: route.name === 'search' }" @click="go('/search', {})">🔍 全局搜索</div>
       <div class="link" :class="{ on: route.name === 'reviewCenter' }" @click="go('/reviews', {})">
@@ -185,6 +193,7 @@ function goDoc(id) {
 .link-badge.fresh-badge { background: #0e7490; }
 .link-badge.cor-badge { background: #b91c1c; }
 .link-badge.gate-badge { background: #2563eb; }
+.link-badge.todo-badge { background: #16a34a; }
 
 .section { margin: 4px 0 14px; }
 .section-title { font-size: 12px; color: var(--text-3); padding: 0 12px; margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.5px; }

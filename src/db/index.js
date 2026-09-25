@@ -121,6 +121,15 @@ export class KnowledgeDB extends Dexie {
       releaseGates: 'id, status, docId, submittedBy, ownerId, version, createdAt, confirmedAt, decidedAt',
       qaCitations: 'id, docId, askedBy, createdAt, gateId'
     })
+    // v15：知识治理事件与统一待办中心
+    // - governanceEvents：汇聚评审/纠错/保鲜/交接/退役/发布门禁六类流程的待办事件
+    //   （按角色分派 → 认领/转交 → 一键回写原流程 / 跳转处理；超时升级、失败重试、源回退重开）；
+    //   dedupeKey（类型+源单+阶段）唯一去重，同一源阶段重复汇聚不产生重复待办；
+    //   源流程状态推进后事件随之闭环（done/cancelled），源回退时事件重开并累计 attempts；
+    //   回写结果（writeback）、逐次动作与超时升级全程 timeline 留痕。
+    this.version(15).stores({
+      governanceEvents: 'id, type, status, refId, docId, assigneeRole, assigneeId, dedupeKey, createdAt, dueAt'
+    })
   }
 }
 

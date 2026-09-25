@@ -20,7 +20,8 @@
     "test:retirement": "mkdir -p node_modules/.cache && esbuild scripts/run-retirement-test.mjs --bundle --platform=node --format=esm --outfile=node_modules/.cache/retirement-test.mjs --alias:@=./src && node node_modules/.cache/retirement-test.mjs",
     "test:retirement-batch": "mkdir -p node_modules/.cache && esbuild scripts/run-orchestration-test.mjs --bundle --platform=node --format=esm --outfile=node_modules/.cache/orchestration-test.mjs --alias:@=./src && node node_modules/.cache/orchestration-test.mjs",
     "test:orchestration": "mkdir -p node_modules/.cache && esbuild scripts/run-orchestration-test.mjs --bundle --platform=node --format=esm --outfile=node_modules/.cache/orchestration-test.mjs --alias:@=./src && node node_modules/.cache/orchestration-test.mjs",
-    "test:release": "mkdir -p node_modules/.cache && esbuild scripts/run-release-test.mjs --bundle --platform=node --format=esm --outfile=node_modules/.cache/release-test.mjs --alias:@=./src && node node_modules/.cache/release-test.mjs"
+    "test:release": "mkdir -p node_modules/.cache && esbuild scripts/run-release-test.mjs --bundle --platform=node --format=esm --outfile=node_modules/.cache/release-test.mjs --alias:@=./src && node node_modules/.cache/release-test.mjs",
+    "test:governance": "mkdir -p node_modules/.cache && esbuild scripts/run-governance-test.mjs --bundle --platform=node --format=esm --outfile=node_modules/.cache/governance-test.mjs --alias:@=./src && node node_modules/.cache/governance-test.mjs"
   },
   "dependencies": {
     "dexie": "^4.0.8",
