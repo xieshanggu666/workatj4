@@ -126,7 +126,8 @@ export function retireTimelineLabel(action) {
     // 编排作业（可重试分批编排）
     'batch-job': '分批编排作业',
     'batch-approve-all': '批量批准编排',
-    'batch-revoke-all': '批量撤销恢复编排'
+    'batch-revoke-all': '批量撤销恢复编排',
+    gov: '治理待办联动'
   }[action] || action
 }
 

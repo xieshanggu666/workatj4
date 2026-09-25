@@ -126,6 +126,7 @@ export function timelineActionLabel(action) {
     approve: '审批通过',
     reject: '审批驳回',
     withdraw: '撤回评审',
-    handover: '负责人交接 · 评审待办转移'
+    handover: '负责人交接 · 评审待办转移',
+    gov: '治理待办联动'
   }[action] || action
 }

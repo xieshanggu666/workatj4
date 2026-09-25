@@ -10,6 +10,7 @@ const routes = [
   // 编辑页不做角色级拦截：持「限时协作」授权的只读成员也可进入，具体编辑权限由编辑器按文档+授权校验
   { path: '/docs/:id/edit', name: 'docEdit', component: () => import('@/views/DocEditor.vue'), meta: { title: '编辑文档' } },
   { path: '/search', name: 'search', component: () => import('@/views/SearchResults.vue'), meta: { title: '搜索' } },
+  { path: '/governance', name: 'governanceCenter', component: () => import('@/views/GovernanceCenter.vue'), meta: { title: '治理待办' } },
   { path: '/reviews', name: 'reviewCenter', component: () => import('@/views/ReviewCenter.vue'), meta: { title: '评审中心' } },
   { path: '/gaps', name: 'gapTickets', component: () => import('@/views/GapTickets.vue'), meta: { title: '缺口工单' } },
   { path: '/corrections', name: 'correctionCenter', component: () => import('@/views/CorrectionCenter.vue'), meta: { title: '知识纠错' } },

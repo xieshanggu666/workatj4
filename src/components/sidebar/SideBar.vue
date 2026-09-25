@@ -12,6 +12,7 @@ import { useFreshnessStore } from '@/stores/freshness'
 import { useHandoverStore } from '@/stores/handover'
 import { useRetirementStore } from '@/stores/retirement'
 import { useReleaseStore } from '@/stores/release'
+import { useGovernanceStore } from '@/stores/governance'
 import { canEditContent, canViewDoc, roleLabel } from '@/utils/permission'
 import { avatarColor } from '@/utils/format'
 
@@ -28,6 +29,7 @@ const freshnessStore = useFreshnessStore()
 const handoverStore = useHandoverStore()
 const retirementStore = useRetirementStore()
 const releaseStore = useReleaseStore()
+const governanceStore = useGovernanceStore()
 
 // 侧栏各文档列表统一过权限：授权撤销/到期后标题也不再从最近浏览/收藏/协作入口泄露
 function visible(d) {
@@ -35,6 +37,11 @@ function visible(d) {
 }
 
 const docById = computed(() => Object.fromEntries(kb.docs.map((d) => [d.id, d])))
+
+// 待我处理的治理待办（六大治理流程统一待办，侧边栏角标）
+const govPending = computed(() =>
+  governanceStore.pendingCountFor(auth.user?.id, auth.user?.role)
+)
 
 // 待我审批的访问申请数（侧边栏角标）
 const accessPending = computed(() =>
@@ -90,6 +97,9 @@ function goDoc(id) {
       <div class="link" :class="{ on: route.name === 'dashboard' }" @click="go('/', {})">🏠 首页总览</div>
       <div class="link" :class="{ on: route.name === 'qa' }" @click="go('/qa', {})">🤖 智能问答</div>
       <div class="link" :class="{ on: route.name === 'search' }" @click="go('/search', {})">🔍 全局搜索</div>
+      <div class="link" :class="{ on: route.name === 'governanceCenter' }" @click="go('/governance', {})">
+        📋 治理待办<span v-if="govPending" class="link-badge gov-badge">{{ govPending }}</span>
+      </div>
       <div class="link" :class="{ on: route.name === 'reviewCenter' }" @click="go('/reviews', {})">
         🧾 评审中心<span v-if="reviewStore.pendingCount" class="link-badge">{{ reviewStore.pendingCount }}</span>
       </div>
@@ -185,6 +195,7 @@ function goDoc(id) {
 .link-badge.fresh-badge { background: #0e7490; }
 .link-badge.cor-badge { background: #b91c1c; }
 .link-badge.gate-badge { background: #2563eb; }
+.link-badge.gov-badge { background: #7c3aed; }
 
 .section { margin: 4px 0 14px; }
 .section-title { font-size: 12px; color: var(--text-3); padding: 0 12px; margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.5px; }

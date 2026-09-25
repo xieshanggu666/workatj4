@@ -200,6 +200,7 @@ export function handoverTimelineLabel(action) {
     cancel: '取消交接',
     approve: '管理员批准 · 完成转移',
     reject: '管理员驳回',
-    fail: '并发变更 · 转移未执行'
+    fail: '并发变更 · 转移未执行',
+    gov: '治理待办联动'
   }[action] || action
 }

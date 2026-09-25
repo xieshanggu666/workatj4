@@ -631,7 +631,8 @@ export function gateTimelineLabel(action) {
     'share-restore': '共享链接状态随回退还原',
     // 阻断原因回写到关联实体
     'gate-blocked': '发布门禁阻断（关联实体侧留痕）',
-    'doc-delete': '关联文档已删除，门禁关闭'
+    'doc-delete': '关联文档已删除，门禁关闭',
+    gov: '治理待办联动'
   }[action] || action
 }
 

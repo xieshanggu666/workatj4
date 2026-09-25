@@ -108,6 +108,7 @@ export function correctionTimelineLabel(action) {
     reject: '评审驳回 · 退回修订',
     withdraw: '撤回纠错',
     'review-withdraw': '撤回复审 · 退回修订',
-    reset: '关联文档已删除'
+    reset: '关联文档已删除',
+    gov: '治理待办联动'
   }[action] || action
 }
